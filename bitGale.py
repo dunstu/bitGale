@@ -9,4 +9,4 @@ while not imgReadOK:
     except IOError:
         print("File not found!")
 
-userImg.show()
+# userImg.show()
