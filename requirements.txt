@@ -1,0 +1,2 @@
+# Required modules. Do: pip install -r requirements.txt 
+'Pillow>=4.0.0'
