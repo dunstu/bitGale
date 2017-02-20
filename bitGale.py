@@ -1,3 +1,5 @@
+import os
+
 from PIL import Image
 
 
@@ -98,6 +100,38 @@ def make_pil_image(array):
     return outputImg
 
 
+def save_image(img):
+    # Get path to save to from user and verify it
+    pathFileOK = False
+    while not pathFileOK:
+        # Get save path and name from user
+        path = input("Path location of image to save into: (in form: .../directory/directory/)\nq to quit")
+        fileName = input("File name: (as filename.filetype")
+
+        # Quit check
+        if path == 'q':
+            return None
+
+        # Check if path/file exist. If yes, ask if OK to overwrite. If only path, continue. If neither, ask to make path
+        if os.path.exists(path) and not os.path.exists(path + fileName):  # Directory exists, and no file with name
+            pathFileOK = True
+
+        elif os.path.exists(path) and os.path.exists(path + fileName):  # Directory exists, file with name exists
+            overwrite = input("File already exists, OK to overwrite? (y/n)")
+            while overwrite not in ['y', 'n']:
+                overwrite = input("Not valid input! OK to overwrite? (y/n)")
+            pathFileOK = True if overwrite == 'y' else False
+
+        else:  # Directory doesnt exist
+            makeDir = input("Directory doesnt exist, would you like to create it? (y/n)")
+            while makeDir not in ['y', 'n']:
+                makeDir = input("Not valid input! Create directory? (y/n)")
+            pathFileOK = True if makeDir == 'y' else False
+
+    img.save(path+fileName)
+    # TODO protect against no backslash at end of path and forwardslash vs backslash
+
+
 def main():
     # Testing space ... for now!
     #userImage = open_image()
@@ -108,7 +142,9 @@ def main():
     userImage = open_image()
     userImageArray = make_pixel_array(userImage)
     userImageArraySorted = pixel_sort(userImageArray, 'C')
-    make_pil_image(userImageArraySorted)
+    save_image(make_pil_image(userImageArraySorted))
+
+
 
 
 main()
