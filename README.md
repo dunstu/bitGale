@@ -4,7 +4,7 @@ using [Pillow](https://github.com/python-pillow/Pillow)
 
 <h3>LIST OF PLANNED/TODO FEATURES:</h3>
 <OL>
-<LI>File <strike>Input</strike>/Output  
+<LI><strike>File Input/Output</strike> 
 <LI>Pixelsorting
 <UL>
 <LI><strike>By R, G, B, or average</strike>  
