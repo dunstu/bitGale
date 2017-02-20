@@ -1,7 +1,6 @@
 # bitGale - Datamoshing and Photo Manipulation Tool
 in Python 3  
 using [Pillow](https://github.com/python-pillow/Pillow)  
-This is my hobby project! Just getting to know git
 
 <h3>LIST OF PLANNED/TODO FEATURES:</h3>
 <OL>
