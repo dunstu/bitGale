@@ -1,6 +1,5 @@
 from PIL import Image
 
-
 def open_image():
     '''
     Prompt user for directory, open image file (if found) and return as an array
@@ -15,11 +14,15 @@ def open_image():
             imgReadOK = True
         except IOError:
             print("File not found!")
+    return userImg
 
-    rawPixels = list(userImg.getdata())
-    width, height = userImg.size
 
-    # Formats the image so each row of pixels is in its own list
+def make_pixel_array(img):
+    # Convert PIL image object to list of tuples in the form [(R, G, B)]
+    rawPixels = list(img.getdata())
+    width, height = img.size
+
+    # Make image into array (this just puts each row of pixels into a sublist)
     imgAsArray = [rawPixels[i * width:(i + 1) * width] for i in range(height)]
     return imgAsArray
 
@@ -81,9 +84,16 @@ def pixel_sort(image, mode):
 
 def main():
     # Testing space ... for now!
+    #userImage = open_image()
+    #print(userImage[0])
+    #userImageSorted = pixel_sort(userImage, 'G')
+    #print(userImageSorted[0])
+
     userImage = open_image()
-    print(userImage[0])
-    userImageSorted = pixel_sort(userImage, 'R')
-    print(userImageSorted[0])
+    userImageArray = make_pixel_array(userImage)
+    userImageArraySorted = pixel_sort(userImageArray, 'C')
+    save_image(userImageArraySorted)
+
+
 
 main()
