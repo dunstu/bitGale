@@ -1,5 +1,6 @@
 from PIL import Image
 
+
 def open_image():
     '''
     Prompt user for directory, open image file (if found) and return as an array
@@ -82,6 +83,21 @@ def pixel_sort(image, mode):
     return sortedImage
 
 
+def make_pil_image(array):
+    # Get (width, height) of array as a tuple
+    size = (len(array[0]), len(array))
+
+    # Create blank PIL image object with width, height of array
+    outputImg = Image.new('RGB', size)
+
+    # Put values from array into new image object
+    for y in range(outputImg.size[1]):
+        for x in range(outputImg.size[0]):
+            outputImg.putpixel((x, y), array[y][x])
+    outputImg.show()  # For testing
+    return outputImg
+
+
 def main():
     # Testing space ... for now!
     #userImage = open_image()
@@ -92,8 +108,7 @@ def main():
     userImage = open_image()
     userImageArray = make_pixel_array(userImage)
     userImageArraySorted = pixel_sort(userImageArray, 'C')
-    save_image(userImageArraySorted)
-
+    make_pil_image(userImageArraySorted)
 
 
 main()
