@@ -27,6 +27,12 @@ def make_pixel_array(img):
 
     # Make image into array (this just puts each row of pixels into a sublist)
     imgAsArray = [rawPixels[i * width:(i + 1) * width] for i in range(height)]
+
+    # Convert pixels to lists for edibility
+    for y in range(len(imgAsArray)):
+        for x in range(len(imgAsArray[y])):
+            imgAsArray[y][x] = list(imgAsArray[y][x])
+
     return imgAsArray
 
 
@@ -92,6 +98,11 @@ def make_pil_image(array):
     # Create blank PIL image object with width, height of array
     outputImg = Image.new('RGB', size)
 
+    # Convert pixels to tuples so that they can be read by PIL
+    for y in range(len(array)):
+        for x in range(len(array[y])):
+            array[y][x] = tuple(array[y][x])
+
     # Put values from array into new image object
     for y in range(outputImg.size[1]):
         for x in range(outputImg.size[0]):
@@ -143,6 +154,7 @@ def main():
     userImageArray = make_pixel_array(userImage)
     userImageArraySorted = pixel_sort(userImageArray, 'C')
     save_image(make_pil_image(userImageArraySorted))
+
 
 
 
