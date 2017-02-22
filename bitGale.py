@@ -96,12 +96,17 @@ def rgb_offset(array, mode):
     channel = 0 if mode == 'r' else 1 if mode == 'g' else 2 if mode == 'b' else 0
 
     # Take the first pixel value, and bubble it through all rows to the end of the image (shifting all values one left)
-    for y in range(len(array)):
+    for y in range(len(array) - 1):
         firstPixel = array[y][0]
         for x in range(len(array[y])):
             array[y][x][channel], firstPixel[channel] = firstPixel[channel], array[y][x][channel]
-        if y == len(array):  #
-            array[y][len(array[y])-1][channel], array[y+1][0][channel] = array[y+1][0][channel], array[y][len(array[y])-1][channel]
+        # Switch the last pixel in the current row with the first pixel in the next row
+        array[y][len(array[y])-1][channel], array[y+1][0][channel] = array[y+1][0][channel], array[y][len(array[y])-1][channel]
+
+    # This does the same as above for the last row without switching with the next row, to prevent Index out of range
+    firstPixel = array[len(array)-1][0]
+    for x in range(len(array[len(array)-1])):
+        array[y][x][channel], firstPixel[channel] = firstPixel[channel], array[y][x][channel]
     return array
 
 
@@ -167,7 +172,7 @@ def main():
     userImage = open_image()
     userImageArray = make_pixel_array(userImage)
 
-    userImageArray = rgb_offset(rgb_offset(userImageArray, 'r', 45), 'r', 45)
+    userImageArray = rgb_offset(rgb_offset(userImageArray, 'r'), 'r')
     #userImageArraySorted = pixel_sort(userImageArray)
     save_image(make_pil_image(userImageArray))
 
