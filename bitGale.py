@@ -92,12 +92,15 @@ def pixel_sort(image, mode='c'):
 
 
 def rgb_offset(array, mode):
+    # Interpret mode input as the index to operate on in each pixel
     channel = 0 if mode == 'r' else 1 if mode == 'g' else 2 if mode == 'b' else 0
+
+    # Take the first pixel value, and bubble it through all rows to the end of the image (shifting all values one left)
     for y in range(len(array)):
-        lastPixel = array[y][0]
+        firstPixel = array[y][0]
         for x in range(len(array[y])):
-            array[y][x][channel], lastPixel[channel] = lastPixel[channel], array[y][x][channel]
-        if y == len(array):
+            array[y][x][channel], firstPixel[channel] = firstPixel[channel], array[y][x][channel]
+        if y == len(array):  #
             array[y][len(array[y])-1][channel], array[y+1][0][channel] = array[y+1][0][channel], array[y][len(array[y])-1][channel]
     return array
 
