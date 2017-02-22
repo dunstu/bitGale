@@ -36,7 +36,7 @@ def make_pixel_array(img):
     return imgAsArray
 
 
-def pixel_sort(image, mode):
+def pixel_sort(image, mode='c'):
     '''
     Pixelsorting effect taking an image array, and the mode. Uses variation on merge sort algorithm
     Inputs: image - image array | mode - either sort by 'R', 'G', 'B' or 'C' (for combined average)
@@ -82,13 +82,24 @@ def pixel_sort(image, mode):
         return merge(left, right, index)
 
     # 3 is not handled as an index, but is looked for as a special mode in merge()
-    index = 0 if mode == 'R' else 1 if mode == 'G' else 2 if mode == 'B' else 3
+    index = 0 if mode == 'r' else 1 if mode == 'g' else 2 if mode == 'b' else 3
 
     # Sort each row lowest->highest
     sortedImage = []
     for row in image:
         sortedImage.append(merge_sort(row, index))
     return sortedImage
+
+
+def rgb_offset(array, mode):
+    channel = 0 if mode == 'r' else 1 if mode == 'g' else 2 if mode == 'b' else 0
+    for y in range(len(array)):
+        lastPixel = array[y][0]
+        for x in range(len(array[y])):
+            array[y][x][channel], lastPixel[channel] = lastPixel[channel], array[y][x][channel]
+        if y == len(array):
+            array[y][len(array[y])-1][channel], array[y+1][0][channel] = array[y+1][0][channel], array[y][len(array[y])-1][channel]
+    return array
 
 
 def make_pil_image(array):
@@ -152,11 +163,10 @@ def main():
 
     userImage = open_image()
     userImageArray = make_pixel_array(userImage)
-    userImageArraySorted = pixel_sort(userImageArray, 'C')
-    save_image(make_pil_image(userImageArraySorted))
 
-
-
+    userImageArray = rgb_offset(rgb_offset(userImageArray, 'r', 45), 'r', 45)
+    #userImageArraySorted = pixel_sort(userImageArray)
+    save_image(make_pil_image(userImageArray))
 
 
 main()
