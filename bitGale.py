@@ -91,22 +91,35 @@ def pixel_sort(image, mode='c'):
     return sortedImage
 
 
-def rgb_offset(array, mode):
+def rgb_offset(array, mode, offset):
+    '''
+    Offsets a colour channel by a given magnitude in an array
+    Inputs: mode - channel to offset (either 'r', 'g', 'b') | offset - displacement (0 < offset <= width of image)
+    Returns: an array in the form [[(r, g, b), (r2, g2, b2)...][...]...]
+    '''
+    # Check to see if the offset is greater than the width of the image (anything larger is invalid)
+    if offset >= len(array[0]):
+        print("Offset wider than image, choose a smaller offset!")
+        return array
+
     # Interpret mode input as the index to operate on in each pixel
     channel = 0 if mode == 'r' else 1 if mode == 'g' else 2 if mode == 'b' else 0
 
-    # Take the first pixel value, and bubble it through all rows to the end of the image (shifting all values one left)
+    # Take 'offset' number of pixels and bubble them to the end of the row
     for y in range(len(array) - 1):
-        firstPixel = array[y][0]
-        for x in range(len(array[y])):
-            array[y][x][channel], firstPixel[channel] = firstPixel[channel], array[y][x][channel]
-        # Switch the last pixel in the current row with the first pixel in the next row
-        array[y][len(array[y])-1][channel], array[y+1][0][channel] = array[y+1][0][channel], array[y][len(array[y])-1][channel]
+        for x in range(0, len(array[y]) - offset - 1, 1):
+            array[y][x][channel], array[y][x+offset][channel] = array[y][x+offset][channel], array[y][x][channel]
+
+        # Switch the last 'offset' number of pixel(s) in the current row with the first 'offset' number of pixel(s) in
+        # the next row. (This code just handles the last few pixels so not to cause out of index error
+        nextPixel = 0
+        for endPixel in range(len(array[y]) - offset, len(array[y]), 1):
+            array[y][endPixel][channel], array[y+1][nextPixel][channel] = array[y+1][nextPixel][channel], array[y][endPixel][channel]
+            nextPixel += 1
 
     # This does the same as above for the last row without switching with the next row, to prevent Index out of range
-    firstPixel = array[len(array)-1][0]
-    for x in range(len(array[len(array)-1])):
-        array[y][x][channel], firstPixel[channel] = firstPixel[channel], array[y][x][channel]
+    for x in range(0, len(array[y]) - offset - 1, 1):
+        array[-1][x][channel], array[-1][x + offset][channel] = array[-1][x + offset][channel], array[-1][x][channel]
     return array
 
 
@@ -172,7 +185,7 @@ def main():
     userImage = open_image()
     userImageArray = make_pixel_array(userImage)
 
-    userImageArray = rgb_offset(rgb_offset(userImageArray, 'r'), 'r')
+    userImageArray = rgb_offset(userImageArray, 'r', 517)
     #userImageArraySorted = pixel_sort(userImageArray)
     save_image(make_pil_image(userImageArray))
 
