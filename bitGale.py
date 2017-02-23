@@ -24,6 +24,8 @@ class bitGaleShell(cmd.Cmd):
     def do_save(self, rawInput):
         imgio.save_image(imgio.make_pil_image(self.imageArray))
 
+    def do_show(self, rawInput):
+        imgio.make_pil_image(self.imageArray).show()
 
 if __name__ == '__main__':
     bitGaleShell().cmdloop()

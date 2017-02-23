@@ -52,7 +52,6 @@ def make_pil_image(array):
     for y in range(outputImg.size[1]):
         for x in range(outputImg.size[0]):
             outputImg.putpixel((x, y), array[y][x])
-    outputImg.show()  # For testing
     return outputImg
 
 
