@@ -12,7 +12,16 @@ using [Pillow](https://github.com/python-pillow/Pillow)
 <LI>Thresholding (keep pixels above x brightness in place, sort partitions)
 <LI>Randomness/non-complete sorting
 </UL>
-<LI>Image previewing
-<LI>A non-console UI  
-<LI>More as my brain makes ideas  
+<LI>RGB channel offset effect
+<UL>
+<LI><strike>Variable offset</strike>
+<LI>Left-Right option
+<LI>Vertical Shifting
+<LI>Randomness
+</UL>
+<LI>Screen Scramble effect <a href="http://s6.photobucket.com/user/kingrukus/media/IMAG06921_zpsqpblqaej.jpg.html">ala this image</a>
+<LI>Bit reduction (pixel value rounding)
+<LI>Live image previewing
+<LI>A non-console UI
+<LI>More as my brain makes ideas
 </OL>
