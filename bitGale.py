@@ -1,4 +1,4 @@
-import imgio as io
+import imgio
 
 
 def pixel_sort(image, mode='c'):
@@ -95,12 +95,12 @@ def main():
     #userImageSorted = pixel_sort(userImage, 'G')
     #print(userImageSorted[0])
 
-    userImage = io.open_image()
-    userImageArray = io.make_pixel_array(userImage)
+    userImage = imgio.open_image()
+    userImageArray = imgio.make_pixel_array(userImage)
 
     userImageArray = rgb_offset(rgb_offset(userImageArray, 'r', 10), 'g', 20)
     #userImageArray = pixel_sort(userImageArray)
-    io.save_image(io.make_pil_image(userImageArray))
+    imgio.save_image(imgio.make_pil_image(userImageArray))
 
 
 main()
