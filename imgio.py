@@ -86,4 +86,3 @@ def save_image(img):
 
     img.save(path+fileName)
     # TODO protect against no backslash at end of path and forwardslash vs backslash
-

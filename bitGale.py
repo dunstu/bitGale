@@ -1,19 +1,29 @@
+import cmd
+
 import effects
 import imgio
 
 
-def main():
-    # Testing space ... for now!
-    #userImage = open_image()
-    #print(userImage[0])
-    #userImageSorted = pixel_sort(userImage, 'G')
-    #print(userImageSorted[0])
+class bitGaleShell(cmd.Cmd):
+    intro = 'Welcome to bitGale.\n'
+    prompt = 'bitGale~~ '
+    file = None
+    imageArray = []
 
-    userImage = imgio.open_image()
-    userImageArray = imgio.make_pixel_array(userImage)
+    def preloop(self):
+        self.imageArray = imgio.make_pixel_array(imgio.open_image())
 
-    userImageArray = effects.rgb_offset(effects.rgb_offset(userImageArray, 'r', 10), 'g', 20)
-    #userImageArray = effects.pixel_sort(userImageArray)
-    imgio.save_image(imgio.make_pil_image(userImageArray))
+    def do_sort(self, rawInput):
+        mode = rawInput
+        self.imageArray = effects.pixel_sort(self.imageArray, mode)
 
-main()
+    def do_rgboff(self, rawInput):
+        mode, offset = rawInput.split()
+        self.imageArray = effects.rgb_offset(self.imageArray, mode, int(offset))
+
+    def do_save(self, rawInput):
+        imgio.save_image(imgio.make_pil_image(self.imageArray))
+
+
+if __name__ == '__main__':
+    bitGaleShell().cmdloop()
