@@ -1,4 +1,4 @@
-def pixel_sort(image, mode='c'):
+def pixel_sort(array, mode='c'):
     '''
     Pixelsorting effect taking an image array, and the mode. Uses variation on merge sort algorithm
     Inputs: image - image array | mode - either sort by 'R', 'G', 'B' or 'C' (for combined average)
@@ -48,7 +48,7 @@ def pixel_sort(image, mode='c'):
 
     # Sort each row lowest->highest
     sortedImage = []
-    for row in image:
+    for row in array:
         sortedImage.append(merge_sort(row, index))
     return sortedImage
 
