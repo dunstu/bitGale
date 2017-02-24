@@ -1,0 +1,9 @@
+---rgboff help---
+rgboff displaces the r, g and b channels of an image relative to eachother.
+Usage: bitGale~: rgboff -m value -o value
+   -m: mode flag - Specifies which RGB channel to offset
+        > Value either 'r', 'g', 'b' (red, green, or blue channel)
+        > Defaults to 'r'
+   -o: offset flag - specifies how far to offset the chosen colour channel
+        > Value an integer between 0 and the width of the image
+        > Defaults to 1
