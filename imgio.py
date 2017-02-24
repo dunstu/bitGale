@@ -85,3 +85,14 @@ def save_image(img):
 
     img.save(path+fileName)
     # TODO protect against no backslash at end of path and forwardslash vs backslash
+
+
+def parse(input):
+    # Parse raw input into a dictionary with flags as keys
+    params = input.strip().split('-')
+    params.remove('')
+    flags = {}
+    for argument in params:
+        argument = argument.strip().split()
+        flags[argument[0]] = argument[1]
+    return flags

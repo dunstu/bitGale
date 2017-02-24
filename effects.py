@@ -1,10 +1,16 @@
-def pixel_sort(array, mode='c'):
+def pixel_sort(array, flags):
     '''
     Pixelsorting effect taking an image array, and the mode. Uses variation on merge sort algorithm
     Inputs: image - image array | mode - either sort by 'R', 'G', 'B' or 'C' (for combined average)
             direction - either 'up', 'down', 'left, 'right'
     '''
     # todo direction (lowest-highest, up/down, etc)
+
+    if 'm' in flags:
+        # 3 is not handled as an index, but is looked for as a special mode in merge()
+        index = 0 if flags['m'] == 'r' else 1 if flags['m'] == 'g' else 2 if flags['m'] == 'b' else 3
+    else:
+        index = 3
 
     # Function definitions for merge sort
     def merge(left, right, index):
@@ -43,9 +49,6 @@ def pixel_sort(array, mode='c'):
         right = merge_sort(list[mid:], index)
         return merge(left, right, index)
 
-    # 3 is not handled as an index, but is looked for as a special mode in merge()
-    index = 0 if mode == 'r' else 1 if mode == 'g' else 2 if mode == 'b' else 3
-
     # Sort each row lowest->highest
     sortedImage = []
     for row in array:
@@ -53,19 +56,32 @@ def pixel_sort(array, mode='c'):
     return sortedImage
 
 
-def rgb_offset(array, mode='r', offset=1):
+def rgb_offset(array, flags):
     '''
     Offsets a colour channel by a given magnitude in an array
     Inputs: mode - channel to offset (either 'r', 'g', 'b') | offset - displacement (0 < offset <= width of image)
     Returns: an array in the form [[(r, g, b), (r2, g2, b2)...][...]...]
     '''
-    # Check to see if the offset is greater than the width of the image (anything larger is invalid)
-    if offset >= len(array[0]):
-        print("Offset wider than image, choose a smaller offset!")
-        return array
+    # Interpret mode flag as the index to operate on in each pixel
+    if 'm' in flags:
+        channel = 0 if flags['m'] == 'r' else 1 if flags['m'] == 'g' else 2 if flags['m'] == 'b' else 0
+    else:
+        channel = 0
 
-    # Interpret mode input as the index to operate on in each pixel
-    channel = 0 if mode == 'r' else 1 if mode == 'g' else 2 if mode == 'b' else 0
+    # Interpret offset flag as offset distance, and protect against non-int values
+    if 'o' in flags:
+        try:
+            offset = int(flags['o'])
+        except ValueError:
+            print('Offset was not an integer!')
+            return array
+
+        # Check to see if the offset is greater than the width of the image (anything larger is invalid)
+        if offset >= len(array[0]):
+            print("Offset wider than image, choose a smaller offset!")
+            return array
+    else:
+        offset = 1
 
     # Take 'offset' number of pixels and bubble them to the end of the row
     for y in range(len(array) - 1):

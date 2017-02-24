@@ -18,12 +18,12 @@ class bitGaleShell(cmd.Cmd):
         pass
 
     def do_sort(self, rawInput):
-        mode = rawInput.strip()
-        self.imageArray = effects.pixel_sort(self.imageArray, mode)
+        flags = imgio.parse(rawInput)
+        self.imageArray = effects.pixel_sort(self.imageArray, flags)
 
     def do_rgboff(self, rawInput):
-        mode, offset = rawInput.split()
-        self.imageArray = effects.rgb_offset(self.imageArray, mode, int(offset))
+        flags = imgio.parse(rawInput)
+        self.imageArray = effects.rgb_offset(self.imageArray, flags)
 
     def do_save(self, rawInput):
         imgio.save_image(imgio.make_pil_image(self.imageArray))
