@@ -1,0 +1,17 @@
+---bitGale Help---
+Welcome to bitGale!
+
+bitGale uses a basic command-line interface through which you run the various effects. To run an effect on your image,
+simply type the name of that effect. Each effect has additional options, which you can specify by adding in the flag
+for that option, followed by the value you want to use.
+
+ - Flags are optional! Every flag will have a value it defaults to if not specified, so if you
+    > Ex: bitGale~: effect -flag1 flag1Value -flag2 flag2Value...
+
+
+ - For effect-specific help, type: 'help [effect]'
+    > This will tell you what that specific effect does, and the flags associated with it.
+    > For a complete list of effects, type 'help list effects'
+
+You can use the 'show' command to view your image anytime, and the 'save' command to save your image after you are done
+editing.

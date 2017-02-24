@@ -5,16 +5,20 @@ import imgio
 
 
 class bitGaleShell(cmd.Cmd):
-    intro = 'Welcome to bitGale.\n'
-    prompt = 'bitGale~~ '
+    intro = "Welcome to bitGale. Type 'help' for general help, 'commands' for a list of commands, or 'quit' to exit.\n"
+    prompt = 'bitGale~: '
     file = None
     imageArray = []
 
     def preloop(self):
         self.imageArray = imgio.make_pixel_array(imgio.open_image())
 
+    def do_help(self, rawInput):
+        #TODO
+        pass
+
     def do_sort(self, rawInput):
-        mode = rawInput
+        mode = rawInput.strip()
         self.imageArray = effects.pixel_sort(self.imageArray, mode)
 
     def do_rgboff(self, rawInput):
