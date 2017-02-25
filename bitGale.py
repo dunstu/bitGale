@@ -10,6 +10,7 @@ class bitGaleShell(cmd.Cmd):
     file = None
     imageArray = []
     savedLastChange = False
+    history = []
 
     def preloop(self):
         self.imageArray = imgio.make_pixel_array(imgio.open_image())
@@ -21,12 +22,14 @@ class bitGaleShell(cmd.Cmd):
     def do_sort(self, rawInput):
         flags = imgio.parse(rawInput)
         if flags is not 'invalid':
+            self.history.append(['sort', flags])
             self.imageArray = effects.pixel_sort(self.imageArray, flags)
             self.savedLastChange = False
 
     def do_rgboff(self, rawInput):
         flags = imgio.parse(rawInput)
         if flags is not 'invalid':
+            self.history.append(['rgboff', flags])
             self.imageArray = effects.rgb_offset(self.imageArray, flags)
             self.savedLastChange = False
 
