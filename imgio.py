@@ -94,7 +94,11 @@ def parse(input):
     flags = {}
     for argument in params:
         argument = argument.strip().split()
-        flags[argument[0]] = argument[1]
+        try:
+            flags[argument[0]] = argument[1]
+        except IndexError:
+            print("Error: Flag specified but no value. Returning to shell.")
+            return 'invalid'
     return flags
 
 

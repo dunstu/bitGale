@@ -20,13 +20,15 @@ class bitGaleShell(cmd.Cmd):
 
     def do_sort(self, rawInput):
         flags = imgio.parse(rawInput)
-        self.imageArray = effects.pixel_sort(self.imageArray, flags)
-        self.savedLastChange = False
+        if flags is not 'invalid':
+            self.imageArray = effects.pixel_sort(self.imageArray, flags)
+            self.savedLastChange = False
 
     def do_rgboff(self, rawInput):
         flags = imgio.parse(rawInput)
-        self.imageArray = effects.rgb_offset(self.imageArray, flags)
-        self.savedLastChange = False
+        if flags is not 'invalid':
+            self.imageArray = effects.rgb_offset(self.imageArray, flags)
+            self.savedLastChange = False
 
     def do_save(self, rawInput):
         imgio.save_image(imgio.make_pil_image(self.imageArray))
