@@ -5,7 +5,7 @@ import imgio
 
 
 class bitGaleShell(cmd.Cmd):
-    intro = "Welcome to bitGale. Type 'help' for general help, 'commands' for a list of commands, or 'quit' to exit.\n"
+    intro = "Welcome to bitGale. Type 'help' for general help, or 'quit' to exit the program.\n"
     prompt = 'bitGale~: '
     file = None
     imageArray = []
@@ -14,8 +14,8 @@ class bitGaleShell(cmd.Cmd):
         self.imageArray = imgio.make_pixel_array(imgio.open_image())
 
     def do_help(self, rawInput):
-        #TODO
-        pass
+        helpFile = None if rawInput == '' else imgio.parse(rawInput)
+        imgio.show_help(helpFile)
 
     def do_sort(self, rawInput):
         flags = imgio.parse(rawInput)

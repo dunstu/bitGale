@@ -96,3 +96,11 @@ def parse(input):
         argument = argument.strip().split()
         flags[argument[0]] = argument[1]
     return flags
+
+
+def show_help(params):
+    fileName = params['e'] if 'e' in params else params['l'] if 'l' in params else 'general'
+    projectPath = os.path.dirname(__file__)
+    absolutePath = os.path.join(projectPath, 'helpdocs', fileName + '.txt')
+    with open(absolutePath) as helpFile:
+        print(helpFile.read())
