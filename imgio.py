@@ -87,17 +87,23 @@ def save_image(img):
     # TODO protect against no backslash at end of path and forwardslash vs backslash
 
 
-def parse(input):
+def parse(input, validFlags):
     # Parse raw input into a dictionary with flags as keys
     params = input.strip().split('-')
     params.remove('')
     flags = {}
     for argument in params:
         argument = argument.strip().split()
-        try:
+        try:  # Protect against commands with flags but no associated value
             flags[argument[0]] = argument[1]
         except IndexError:
             print("Error: Flag specified but no value. Returning to shell.")
+            return 'invalid'
+
+    # Check if only valid flags have been specified
+    for f in flags:
+        if f not in validFlags:
+            print('Invalid parameters, returning to shell.')
             return 'invalid'
     return flags
 

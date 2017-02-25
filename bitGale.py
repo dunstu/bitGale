@@ -20,14 +20,16 @@ class bitGaleShell(cmd.Cmd):
         imgio.show_help(helpFile)
 
     def do_sort(self, rawInput):
-        flags = imgio.parse(rawInput)
+        validFlags = ['m']
+        flags = imgio.parse(rawInput, validFlags)
         if flags is not 'invalid':
             self.history.append(['sort', flags])
             self.imageArray = effects.pixel_sort(self.imageArray, flags)
             self.savedLastChange = False
 
     def do_rgboff(self, rawInput):
-        flags = imgio.parse(rawInput)
+        validFlags = ['m', 'o']
+        flags = imgio.parse(rawInput, validFlags)
         if flags is not 'invalid':
             self.history.append(['rgboff', flags])
             self.imageArray = effects.rgb_offset(self.imageArray, flags)
@@ -44,7 +46,7 @@ class bitGaleShell(cmd.Cmd):
         while not self.savedLastChange:  # If effects have been applied since last save, ask user to save
             okToQuit = input("You have some unsaved changes. Do you still want to quit?(y,n)")
             if okToQuit == 'y':
-                print("Exiting bitGale...")
+                print("Exiting bitGale.")
                 return True
             else:
                 print('Returning to shell.')
