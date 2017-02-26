@@ -16,7 +16,8 @@ class bitGaleShell(cmd.Cmd):
         self.imageArray = imgio.make_pixel_array(imgio.open_image())
 
     def do_help(self, rawInput):
-        helpFile = None if rawInput == '' else imgio.parse(rawInput)
+        # Empty dict here just makes the help function default to general help
+        helpFile = {} if (rawInput == '' or rawInput == '?') else imgio.parse(rawInput)
         imgio.show_help(helpFile)
 
     def do_sort(self, rawInput):
@@ -44,7 +45,7 @@ class bitGaleShell(cmd.Cmd):
 
     def do_quit(self, rawInput):
         while not self.savedLastChange:  # If effects have been applied since last save, ask user to save
-            okToQuit = input("You have some unsaved changes. Do you still want to quit?(y,n)")
+            okToQuit = input("You have some unsaved changes. Do you still want to quit?(y/n)")
             if okToQuit == 'y':
                 print("Exiting bitGale.")
                 return True
