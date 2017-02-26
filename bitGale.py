@@ -44,8 +44,10 @@ class bitGaleShell(cmd.Cmd):
         self.savedLastChange = True
 
     def do_show(self, rawInput):
-        imgio.make_pil_image(self.imageArray).show()
-        imgio.make_pixel_array(self.imageArray)
+        imgToDisplay = imgio.make_pil_image(self.imageArray)
+        imgToDisplay.show()
+        self.imageArray = imgio.make_pixel_array(imgToDisplay)
+
 
     def do_quit(self, rawInput):
         while not self.savedLastChange:  # If effects have been applied since last save, ask user to save
