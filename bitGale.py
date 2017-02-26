@@ -16,8 +16,9 @@ class bitGaleShell(cmd.Cmd):
         self.imageArray = imgio.make_pixel_array(imgio.open_image())
 
     def do_help(self, rawInput):
+        validFlags = ['e']
         # Empty dict here just makes the help function default to general help
-        helpFile = {} if (rawInput == '' or rawInput == '?') else imgio.parse(rawInput)
+        helpFile = {} if (rawInput == '' or rawInput == '?') else imgio.parse(rawInput, validFlags)
         imgio.show_help(helpFile)
 
     def do_sort(self, rawInput):
@@ -47,7 +48,6 @@ class bitGaleShell(cmd.Cmd):
         imgToDisplay = imgio.make_pil_image(self.imageArray)
         imgToDisplay.show()
         self.imageArray = imgio.make_pixel_array(imgToDisplay)
-
 
     def do_quit(self, rawInput):
         while not self.savedLastChange:  # If effects have been applied since last save, ask user to save

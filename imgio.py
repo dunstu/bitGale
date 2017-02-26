@@ -109,8 +109,13 @@ def parse(input, validFlags):
 
 
 def show_help(params):
-    fileName = params['e'] if 'e' in params else params['l'] if 'l' in params else 'general'
+    # Default to general help file if no flag is given
+    fileName = params['e'] if 'e' in params else 'general'
+
+    # Get the absolute path of the file
     projectPath = os.path.dirname(__file__)
     absolutePath = os.path.join(projectPath, 'helpdocs', fileName + '.txt')
+
+    # Display help
     with open(absolutePath) as helpFile:
         print(helpFile.read())
