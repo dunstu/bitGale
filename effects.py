@@ -62,26 +62,26 @@ def pixel_sort(array, flags):
 def rgb_offset(array, flags):
     '''
     Offsets a colour channel by a given magnitude in an array
-    Inputs: mode - channel to offset (either 'r', 'g', 'b') | offset - displacement (0 < offset <= width of image)
+    Inputs: c - channel to offset (either 'r', 'g', 'b') | d - displacement (0 < offset <= width of image)
     Returns: an array in the form [[(r, g, b), (r2, g2, b2)...][...]...]
     '''
     # Interpret mode flag as the index to operate on in each pixel
-    if 'm' in flags:
-        channel = 0 if flags['m'] == 'r' else 1 if flags['m'] == 'g' else 2 if flags['m'] == 'b' else 0
+    if 'c' in flags:
+        channel = 0 if flags['c'] == 'r' else 1 if flags['c'] == 'g' else 2 if flags['c'] == 'b' else 0
     else:
         channel = 0
 
     # Interpret offset flag as offset distance, and protect against non-int values
-    if 'o' in flags:
+    if 'd' in flags:
         try:
-            offset = int(flags['o'])
+            offset = int(flags['d'])
         except ValueError:
-            print('Offset was not an integer!')
+            print('*** Displacement not an integer!')
             return array
 
         # Check to see if the offset is greater than the width of the image (anything larger is invalid)
         if offset >= len(array[0]):
-            print("Offset wider than image, choose a smaller offset!")
+            print("Displacement wider than image, choose a smaller displacement!")
             return array
     else:
         offset = 1
@@ -105,7 +105,12 @@ def rgb_offset(array, flags):
 
 
 def row_shift(array, flags):
-    ammount = 10
+    # Interpret the max displacement
+    try:
+        displacementMax = int(flags['d']) if 'd' in flags else 10
+    except ValueError:
+        print('*** Displacement not an integer!')
+        return array
 
     # Generate random indices that will act as the dividers between rows for offset 'sections'. Max
     indices = sorted([random.randint(0, len(array)) for num in range(random.randint(1, 10))])
@@ -115,14 +120,17 @@ def row_shift(array, flags):
         # Interpret the shift direction
         direction = 'l->r' if random.randint(0, 1) == 0 else 'r->l'
 
+        # Get a distance to displace for this section
+        amount = random.randint(0, displacementMax)
+
         # Run through each row in that section
         for y in range(indices[edge], indices[edge+1]):
             # Set direction to run through the pixels in each row
-            run = range(0, len(array[y])-ammount-1, 1) if direction == 'l->r' else range(len(array[y])-1, ammount, -1)
-            for x in run:  # Bubble 'ammount' number of pixels to the end
+            run = range(0, len(array[y])-amount-1, 1) if direction == 'l->r' else range(len(array[y])-1, amount, -1)
+            for x in run:  # Bubble 'amount' number of pixels to the end
                 if direction == 'l->r':
-                    array[y][x], array[y][x+ammount] = array[y][x+ammount], array[y][x]
+                    array[y][x], array[y][x+amount] = array[y][x+amount], array[y][x]
                 else:
-                    array[y][x], array[y][x-ammount] = array[y][x-ammount], array[y][x]
+                    array[y][x], array[y][x-amount] = array[y][x-amount], array[y][x]
     return array
 

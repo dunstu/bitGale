@@ -9,7 +9,7 @@ for that option, followed by the value you want to use.
     > Ex: bitGale~: effect -flag1 flag1Value -flag2 flag2Value...
 
 
- - For effect-specific help, type: 'help -e [effect]' (or help -e list for a list of all effects
+ - For effect-specific help, type: 'help -e [effect]' (or help -e list for a list of all effects)
     > This will tell you what that specific effect does, and the flags associated with it.
 
 You can use the 'show' command to view your image anytime, and the 'save' command to save your image after you are done

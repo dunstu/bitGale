@@ -90,14 +90,15 @@ def save_image(img):
 def parse(input, validFlags):
     # Parse raw input into a dictionary with flags as keys
     params = input.strip().split('-')
-    params.remove('')
+    if '' in params:
+        params.remove('')
     flags = {}
     for argument in params:
         argument = argument.strip().split()
         try:  # Protect against commands with flags but no associated value
             flags[argument[0]] = argument[1]
         except IndexError:
-            print("Error: Flag specified but no value. Returning to shell.")
+            print("*** One flag or value given without the other")
             return 'invalid'
 
     # Check if only valid flags have been specified

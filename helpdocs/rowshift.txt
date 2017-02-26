@@ -1,0 +1,4 @@
+---rowshift help---
+rowshift randomly takes chunks of rows and shifts them left or right
+Usage: bitGale~: rowshift -d
+   -d: displacement flag: specifies the max distance a section can be shifted (displacement is chosen between 0 and -d)

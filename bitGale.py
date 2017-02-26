@@ -30,7 +30,7 @@ class bitGaleShell(cmd.Cmd):
             self.savedLastChange = False
 
     def do_rgboff(self, rawInput):
-        validFlags = ['m', 'o']
+        validFlags = ['c', 'd']
         flags = imgio.parse(rawInput, validFlags)
         if flags is not 'invalid':
             self.history.append(['rgboff', flags])
@@ -38,7 +38,12 @@ class bitGaleShell(cmd.Cmd):
             self.savedLastChange = False
 
     def do_rowshift(self, rawInput):
-        self.imageArray = effects.row_shift(self.imageArray, rawInput)
+        validFlags = ['d']
+        flags = imgio.parse(rawInput, validFlags)
+        if flags is not 'invalid':
+            self.history.append(['rowshift', flags])
+            self.imageArray = effects.row_shift(self.imageArray, flags)
+            self.savedLastChange = False
 
     def do_save(self, rawInput):
         imgio.save_image(imgio.make_pil_image(self.imageArray))
