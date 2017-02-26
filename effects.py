@@ -1,3 +1,6 @@
+import random
+
+
 def pixel_sort(array, flags):
     '''
     Pixelsorting effect taking an image array, and the mode. Uses variation on merge sort algorithm
@@ -99,3 +102,27 @@ def rgb_offset(array, flags):
     for x in range(0, len(array[y]) - offset - 1, 1):
         array[-1][x][channel], array[-1][x + offset][channel] = array[-1][x + offset][channel], array[-1][x][channel]
     return array
+
+
+def row_shift(array, flags):
+    ammount = 10
+
+    # Generate random indices that will act as the dividers between rows for offset 'sections'. Max
+    indices = sorted([random.randint(0, len(array)) for num in range(random.randint(1, 10))])
+
+    # Run through every other section of rows
+    for edge in range(0, len(indices)-1, 2):
+        # Interpret the shift direction
+        direction = 'l->r' if random.randint(0, 1) == 0 else 'r->l'
+
+        # Run through each row in that section
+        for y in range(indices[edge], indices[edge+1]):
+            # Set direction to run through the pixels in each row
+            run = range(0, len(array[y])-ammount-1, 1) if direction == 'l->r' else range(len(array[y])-1, ammount, -1)
+            for x in run:  # Bubble 'ammount' number of pixels to the end
+                if direction == 'l->r':
+                    array[y][x], array[y][x+ammount] = array[y][x+ammount], array[y][x]
+                else:
+                    array[y][x], array[y][x-ammount] = array[y][x-ammount], array[y][x]
+    return array
+

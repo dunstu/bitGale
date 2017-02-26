@@ -19,6 +19,12 @@ using [Pillow](https://github.com/python-pillow/Pillow)
 <LI>Vertical Shifting
 <LI>Randomness
 </UL>
+<LI>Row shift effect
+<UL>
+<LI><strike>Randomly select section of rows</strike>
+<LI>Flags for displacement amount/range
+<LI>Flags for ranges of rows
+</UL>
 <LI>Screen Scramble effect <a href="http://s6.photobucket.com/user/kingrukus/media/IMAG06921_zpsqpblqaej.jpg.html">ala this image</a>
 <LI>Bit reduction (pixel value rounding)
 <LI>Live image previewing

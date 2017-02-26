@@ -36,6 +36,9 @@ class bitGaleShell(cmd.Cmd):
             self.imageArray = effects.rgb_offset(self.imageArray, flags)
             self.savedLastChange = False
 
+    def do_rowshift(self, rawInput):
+        self.imageArray = effects.row_shift(self.imageArray, rawInput)
+
     def do_save(self, rawInput):
         imgio.save_image(imgio.make_pil_image(self.imageArray))
         self.savedLastChange = True
