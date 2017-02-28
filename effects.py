@@ -133,4 +133,3 @@ def row_shift(array, flags):
                 else:
                     array[y][x], array[y][x-amount] = array[y][x-amount], array[y][x]
     return array
-

@@ -61,7 +61,7 @@ class bitGaleShell(cmd.Cmd):
                 print("Exiting bitGale.")
                 return True
             else:
-                print('Returning to shell.')
+                print('*** Returning to shell.')
                 return False
 
 if __name__ == '__main__':
