@@ -9,14 +9,17 @@ def pixel_sort(array, flags):
     '''
     # todo direction (lowest-highest, up/down, etc)
 
-    threshold = 50
+    # Interpret mode flag
     if 'm' in flags:
         # 3 is not handled as an index, but is looked for as a special mode in merge()
         index = 0 if flags['m'] == 'r' else 1 if flags['m'] == 'g' else 2 if flags['m'] == 'b' else 3
     else:
         index = 3
 
-    # Function definitions for merge sort
+    # Interpret threshold flag
+    threshold = int(flags['t']) if 't' in flags else 255 // 2
+
+    # Function definitions for merge sort and getting sections
     def merge(left, right, index):
         result = []
         l = 0  # pointer to the left list
@@ -53,43 +56,43 @@ def pixel_sort(array, flags):
         right = merge_sort(list[mid:], index)
         return merge(left, right, index)
 
-    def get_threshold_sections(array, index):
+    def get_threshold_breakpoints(array, index, threshold):
         allSections = []
-        for y in range(len(array)):
-            noneOver = True
-            section = [0]
-            for x in range(1, len(array[y])):
+
+        for y in range(len(array)):  # Run through the rows of the image
+            noneOver = True  # This flag handles when a whole rule is under
+            section = [0]  # Section is the current row's list of 'breakpoint' indices
+
+            for x in range(1, len(array[y])):  # Run through the row, starting at the second pixel to avoid out of range
+                # Calculate the value of the pixel. Index=3 is the combined average brightness, else use single channel
                 pixel = (array[y][x][0] + array[y][x][1] + array[y][x][2]) / 3 if index == 3 else array[y][x][index]
+                # Same, but for the pixel before.
                 lastPixel = (array[y][x - 1][0] + array[y][x - 1][1] + array[y][x - 1][2]) / 3 if index == 3 else array[y][x - 1][index]
-                if pixel > threshold:
-                    print('happened')
+
+                if pixel > threshold:  # Ensures that if all pixels are under threshold, the row is sorted, not ignored
                     noneOver = False
+
+                # If the current pixel is below, but the last was above the threshold, mark as a threshold breakpoint
                 if pixel <= threshold < lastPixel:
                     section.append(x)
-                elif pixel > threshold >= lastPixel:
+                elif pixel > threshold >= lastPixel:  # Similarity, mark if this pixel is above and the last below
                     section.append(x)
-            if noneOver is True:
+
+            if noneOver is True:  # If all pixels were below the threshold, set breakpoints to the edges of the image
                 section.append(len(array[y])-1)
-            allSections.append(section)
+
+            allSections.append(section)  # Append this list of breakpoints to the master list to be returned
 
         return allSections
 
-    sections = get_threshold_sections(array, index)
-    for i in sections:
-        print(i)
+    sections = get_threshold_breakpoints(array, index, threshold)
 
+    # Run through the rows of the image and the rows of the sections (Since they are the same length, this does both)
     for row in range(len(array)):
-        zones = range(0, len(sections[row]) - 1, 2)
-        print(zones)
-        for edge in zones:
-            print('start')
-            print(row, sections[row])
+        zones = range(0, len(sections[row]) - 1, 2)  # Get the zones to sort for this row
+        for edge in zones:  # Run through each zone
+            # Set that zone equal to the sorted version of that row
             array[row][sections[row][edge]:sections[row][edge + 1]] = merge_sort(array[row][sections[row][edge]:sections[row][edge + 1]], index)
-
-    ''''# Sort each row lowest->highest
-    sortedImage = []
-    for row in array:
-        sortedImage.append(merge_sort(row, index))'''
     return array
 
 
