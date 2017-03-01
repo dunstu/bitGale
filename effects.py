@@ -9,6 +9,7 @@ def pixel_sort(array, flags):
     '''
     # todo direction (lowest-highest, up/down, etc)
 
+    threshold = 50
     if 'm' in flags:
         # 3 is not handled as an index, but is looked for as a special mode in merge()
         index = 0 if flags['m'] == 'r' else 1 if flags['m'] == 'g' else 2 if flags['m'] == 'b' else 3
@@ -52,11 +53,44 @@ def pixel_sort(array, flags):
         right = merge_sort(list[mid:], index)
         return merge(left, right, index)
 
-    # Sort each row lowest->highest
+    def get_threshold_sections(array, index):
+        allSections = []
+        for y in range(len(array)):
+            noneOver = True
+            section = [0]
+            for x in range(1, len(array[y])):
+                pixel = (array[y][x][0] + array[y][x][1] + array[y][x][2]) / 3 if index == 3 else array[y][x][index]
+                lastPixel = (array[y][x - 1][0] + array[y][x - 1][1] + array[y][x - 1][2]) / 3 if index == 3 else array[y][x - 1][index]
+                if pixel > threshold:
+                    print('happened')
+                    noneOver = False
+                if pixel <= threshold < lastPixel:
+                    section.append(x)
+                elif pixel > threshold >= lastPixel:
+                    section.append(x)
+            if noneOver is True:
+                section.append(len(array[y])-1)
+            allSections.append(section)
+
+        return allSections
+
+    sections = get_threshold_sections(array, index)
+    for i in sections:
+        print(i)
+
+    for row in range(len(array)):
+        zones = range(0, len(sections[row]) - 1, 2)
+        print(zones)
+        for edge in zones:
+            print('start')
+            print(row, sections[row])
+            array[row][sections[row][edge]:sections[row][edge + 1]] = merge_sort(array[row][sections[row][edge]:sections[row][edge + 1]], index)
+
+    ''''# Sort each row lowest->highest
     sortedImage = []
     for row in array:
-        sortedImage.append(merge_sort(row, index))
-    return sortedImage
+        sortedImage.append(merge_sort(row, index))'''
+    return array
 
 
 def rgb_offset(array, flags):
