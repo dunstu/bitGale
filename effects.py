@@ -170,3 +170,14 @@ def row_shift(array, flags):
                 else:
                     array[y][x], array[y][x-amount] = array[y][x-amount], array[y][x]
     return array
+
+
+def edge_extend(array, flags):
+    percent = .8
+    for y in range(len(array)):
+        indexToExtend = int(len(array[y]) * percent)
+        for x in range(len(array[y])):
+            if x > indexToExtend:
+                array[y][x] = array[y][indexToExtend]
+    return array
+

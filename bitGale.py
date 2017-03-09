@@ -45,6 +45,9 @@ class bitGaleShell(cmd.Cmd):
             self.imageArray = effects.row_shift(self.imageArray, flags)
             self.savedLastChange = False
 
+    def do_eextend(self, rawInput):
+        self.imageArray = effects.edge_extend(self.imageArray, None)
+
     def do_save(self, rawInput):
         imgio.save_image(imgio.make_pil_image(self.imageArray))
         self.savedLastChange = True
