@@ -1,6 +1,6 @@
 ---sort help---
 sort is a pixelsorting effect.
-Usage: bitGale~: sort -m value
-   -m: mode flag - Specifies which RGB channel to use when getting pixel value
+Usage: bitGale~: sort -mode value
+-mode: mode flag - Specifies which RGB channel to use when getting pixel value
         > Either 'r', 'g', 'b' (red, green, or blue channel), or 'c' (for combined average)
         > Defaults to 'c'

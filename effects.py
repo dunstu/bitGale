@@ -10,14 +10,14 @@ def pixel_sort(array, flags):
     # todo direction (lowest-highest, up/down, etc)
 
     # Interpret mode flag
-    if 'm' in flags:
+    if 'mode' in flags:
         # 3 is not handled as an index, but is looked for as a special mode in merge()
-        index = 0 if flags['m'] == 'r' else 1 if flags['m'] == 'g' else 2 if flags['m'] == 'b' else 3
+        index = 0 if flags['mode'] == 'r' else 1 if flags['mode'] == 'g' else 2 if flags['mode'] == 'b' else 3
     else:
         index = 3
 
     # Interpret threshold flag
-    threshold = int(flags['t']) if 't' in flags else 255 // 2
+    threshold = int(flags['thr']) if 'thr' in flags else 255 // 2
 
     # Function definitions for merge sort and getting sections
     def merge(left, right, index):
@@ -103,15 +103,15 @@ def rgb_offset(array, flags):
     Returns: an array in the form [[(r, g, b), (r2, g2, b2)...][...]...]
     '''
     # Interpret mode flag as the index to operate on in each pixel
-    if 'c' in flags:
-        channel = 0 if flags['c'] == 'r' else 1 if flags['c'] == 'g' else 2 if flags['c'] == 'b' else 0
+    if 'cnl' in flags:
+        channel = 0 if flags['cnl'] == 'r' else 1 if flags['cnl'] == 'g' else 2 if flags['cnl'] == 'b' else 0
     else:
         channel = 0
 
     # Interpret offset flag as offset distance, and protect against non-int values
-    if 'd' in flags:
+    if 'dis' in flags:
         try:
-            offset = int(flags['d'])
+            offset = int(flags['dis'])
         except ValueError:
             print('*** Displacement not an integer!')
             return array
@@ -144,7 +144,7 @@ def rgb_offset(array, flags):
 def row_shift(array, flags):
     # Interpret the max displacement
     try:
-        displacementMax = int(flags['d']) if 'd' in flags else 10
+        displacementMax = int(flags['dis']) if 'dis' in flags else 10
     except ValueError:
         print('*** Displacement not an integer!')
         return array

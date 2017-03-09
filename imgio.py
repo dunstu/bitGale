@@ -111,7 +111,7 @@ def parse(rawInput, validFlags):
 
 def show_help(params):
     # Default to general help file if no flag is given
-    fileName = params['e'] if 'e' in params else 'general'
+    fileName = params['eff'] if 'eff' in params else 'general'
 
     # Get the absolute path of the file
     projectPath = os.path.dirname(__file__)

@@ -16,13 +16,13 @@ class bitGaleShell(cmd.Cmd):
         self.imageArray = imgio.make_pixel_array(imgio.open_image())
 
     def do_help(self, rawInput):
-        validFlags = ['e']
+        validFlags = ['eff']
         # Empty dict here just makes the help function default to general help
         helpFile = {} if (rawInput == '' or rawInput == '?') else imgio.parse(rawInput, validFlags)
         imgio.show_help(helpFile)
 
     def do_sort(self, rawInput):
-        validFlags = ['m', 't']
+        validFlags = ['mode', 'thr']
         flags = imgio.parse(rawInput, validFlags)
         if flags is not 'invalid':
             self.history.append(['sort', flags])
@@ -30,7 +30,7 @@ class bitGaleShell(cmd.Cmd):
             self.savedLastChange = False
 
     def do_rgboff(self, rawInput):
-        validFlags = ['c', 'd']
+        validFlags = ['cnl', 'dis']
         flags = imgio.parse(rawInput, validFlags)
         if flags is not 'invalid':
             self.history.append(['rgboff', flags])
@@ -38,7 +38,7 @@ class bitGaleShell(cmd.Cmd):
             self.savedLastChange = False
 
     def do_rowshift(self, rawInput):
-        validFlags = ['d']
+        validFlags = ['dis']
         flags = imgio.parse(rawInput, validFlags)
         if flags is not 'invalid':
             self.history.append(['rowshift', flags])
@@ -46,7 +46,12 @@ class bitGaleShell(cmd.Cmd):
             self.savedLastChange = False
 
     def do_eextend(self, rawInput):
-        self.imageArray = effects.edge_extend(self.imageArray, None)
+        validFlags = ['dir']
+        flags = imgio.parse(rawInput, validFlags)
+        if flags is not 'invalid':
+            self.history.append(['rowshift', flags])
+            self.imageArray = effects.row_shift(self.imageArray, flags)
+            self.savedLastChange = False
 
     def do_save(self, rawInput):
         imgio.save_image(imgio.make_pil_image(self.imageArray))
