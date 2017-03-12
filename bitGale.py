@@ -46,11 +46,11 @@ class bitGaleShell(cmd.Cmd):
             self.savedLastChange = False
 
     def do_eextend(self, rawInput):
-        validFlags = ['dir']
+        validFlags = ['dir', 'dis']
         flags = imgio.parse(rawInput, validFlags)
         if flags is not 'invalid':
             self.history.append(['rowshift', flags])
-            self.imageArray = effects.row_shift(self.imageArray, flags)
+            self.imageArray = effects.edge_extend(self.imageArray, flags)
             self.savedLastChange = False
 
     def do_save(self, rawInput):

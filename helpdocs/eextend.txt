@@ -1,0 +1,5 @@
+---Edge Extend help---
+eextend takes the edge pixels of an image and 'drags' them into the image
+Usage: bitGale~: eextend -dis value
+ -dis: distance flag - specifies how many pixels in to drag the edge.
+        > Defaults to 20% of the image length

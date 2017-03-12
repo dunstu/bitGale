@@ -173,9 +173,9 @@ def row_shift(array, flags):
 
 
 def edge_extend(array, flags):
-    percent = .8
+    distance = flags['dis'] if 'dis' in flags else int(len(array[0]) * 0.2)
     for y in range(len(array)):
-        indexToExtend = int(len(array[y]) * percent)
+        indexToExtend = len(array[y]) - distance
         for x in range(len(array[y])):
             if x > indexToExtend:
                 array[y][x] = array[y][indexToExtend]
