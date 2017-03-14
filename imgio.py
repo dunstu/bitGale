@@ -109,6 +109,27 @@ def parse(rawInput, validFlags):
     return flags
 
 
+def rotate_image(array, flags):
+    angle = flags['ang'] if 'ang' in flags else '90'
+    rotatedImage = []
+    if angle == '90':
+        for x in range(len(array[0])):
+            rotatedImage.append([])
+            for y in range(len(array) -1, 0, -1):
+                rotatedImage[x].append(array[y][x])
+        return rotatedImage
+    if angle == '180':
+        for row in range(len(array)-1, -1, -1):
+            rotatedImage.append(array[row])
+        return rotatedImage
+    if angle == '270':
+        for x in range(len(array[0])):
+            rotatedImage.append([])
+            for y in range(len(array)):
+                rotatedImage[x].append(array[y][x])
+        return rotatedImage
+
+
 def show_help(params):
     # Default to general help file if no flag is given
     fileName = params['eff'] if 'eff' in params else 'general'

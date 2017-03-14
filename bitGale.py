@@ -53,6 +53,14 @@ class bitGaleShell(cmd.Cmd):
             self.imageArray = effects.edge_extend(self.imageArray, flags)
             self.savedLastChange = False
 
+    def do_rotate(self, rawInput):
+        validFlags = ['ang']
+        flags = imgio.parse(rawInput, validFlags)
+        if flags is not 'invalid':
+            self.history.append(['rotate', flags])
+            self.imageArray = imgio.rotate_image(self.imageArray, flags)
+            self.savedLastChange = False
+
     def do_save(self, rawInput):
         imgio.save_image(imgio.make_pil_image(self.imageArray))
         self.savedLastChange = True
