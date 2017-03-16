@@ -25,7 +25,10 @@ using [Pillow](https://github.com/python-pillow/Pillow)
 <LI>Flags for <strike>displacement amount</strike>/range
 <LI>Flags for ranges of rows
 </UL>
-<LI>Screen Scramble effect <a href="http://s6.photobucket.com/user/kingrukus/media/IMAG06921_zpsqpblqaej.jpg.html">ala this image</a>
+<LI><strike>Edge extention </strike><a href="http://s6.photobucket.com/user/kingrukus/media/IMAG06921_zpsqpblqaej.jpg.html">ala this image</a>
+<UL>
+<LI>Directionality
+</UL>
 <LI>Bit reduction (pixel value rounding)
 <LI>Live image previewing
 <LI>A non-console UI
