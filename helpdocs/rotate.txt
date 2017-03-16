@@ -1,0 +1,6 @@
+---rotate help---
+rotate does right-angle rotations of the image
+Usage: bitGale~: rotate -ang value
+ -ang: angle (measured clockwise) through which to rotate the image in degrees
+        > Either 90, 180, or 270
+        > Defaults to 90

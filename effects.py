@@ -4,19 +4,20 @@ import random
 def pixel_sort(array, flags):
     '''
     Pixelsorting effect taking an image array, and the mode. Uses variation on merge sort algorithm
-    Inputs: image - image array | mode - either sort by 'R', 'G', 'B' or 'C' (for combined average)
-            direction - either 'up', 'down', 'left, 'right'
+    Inputs: array - a 3D image array
+            flags - a dictionary of optional flag keys and values
+                    valid keys: 'mode': 'r', 'g', 'b', or 'c' | 'thr': int between 0<->255
     '''
     # todo direction (lowest-highest, up/down, etc)
 
-    # Interpret mode flag
+    # Interpret mode flag, default to combined average (3)
     if 'mode' in flags:
         # 3 is not handled as an index, but is looked for as a special mode in merge()
         index = 0 if flags['mode'] == 'r' else 1 if flags['mode'] == 'g' else 2 if flags['mode'] == 'b' else 3
     else:
         index = 3
 
-    # Interpret threshold flag
+    # Interpret threshold flag, default to 50% brightness
     threshold = int(flags['thr']) if 'thr' in flags else 255 // 2
 
     # Function definitions for merge sort and getting sections
@@ -99,8 +100,10 @@ def pixel_sort(array, flags):
 def rgb_offset(array, flags):
     '''
     Offsets a colour channel by a given magnitude in an array
-    Inputs: c - channel to offset (either 'r', 'g', 'b') | d - displacement (0 < offset <= width of image)
-    Returns: an array in the form [[(r, g, b), (r2, g2, b2)...][...]...]
+    Inputs: array - the image as a 3D array
+            flags - a dictionary of optional flag keys and values
+                    valid keys: 'cnl': 'r', 'g', or 'b' | 'dis': int between 0<->width
+    Returns: a 3D image array
     '''
     # Interpret mode flag as the index to operate on in each pixel
     if 'cnl' in flags:
@@ -173,10 +176,22 @@ def row_shift(array, flags):
 
 
 def edge_extend(array, flags):
+    '''
+    This function 'drags' pixels from a row or column in the image to the end of the image
+    Inputs: array - the image as a 3D array
+            flags - a dictionary of optional flag keys and values
+                    valid keys: 'dis': int between 0<->width
+    Returns: a 3D image array
+    '''
+
+    # Interpret flags, default 'distance' to 20% of the image size
     distance = flags['dis'] if 'dis' in flags else int(len(array[0]) * 0.2)
+    # Run through each row
     for y in range(len(array)):
         indexToExtend = len(array[y]) - distance
+        # Run through each pixel in the row
         for x in range(len(array[y])):
+            # If you are past the specified distance, drag the previous pixel value in
             if x > indexToExtend:
                 array[y][x] = array[y][indexToExtend]
     return array

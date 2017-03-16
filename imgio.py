@@ -110,21 +110,30 @@ def parse(rawInput, validFlags):
 
 
 def rotate_image(array, flags):
+    # Interpret flags, default to 90 degree rotate right
     angle = flags['ang'] if 'ang' in flags else '90'
+
     rotatedImage = []
     if angle == '90':
+        # Run through each column of the image
         for x in range(len(array[0])):
+            # Create a new row in the rotated image
             rotatedImage.append([])
+            # Starting at the rightmost column, add every pixel in the columns to the row in the rotated image
             for y in range(len(array) -1, 0, -1):
                 rotatedImage[x].append(array[y][x])
         return rotatedImage
     if angle == '180':
+        # Run through the rows of the image, starting from the bottom, and add them to the rotated image
         for row in range(len(array)-1, -1, -1):
             rotatedImage.append(array[row])
         return rotatedImage
     if angle == '270':
+        # Run through each column of the image
         for x in range(len(array[0])):
+            # Create a new row in the rotated image
             rotatedImage.append([])
+            # Starting at the leftmost column, add every pixel in the columns to the row in the rotated image
             for y in range(len(array)):
                 rotatedImage[x].append(array[y][x])
         return rotatedImage
