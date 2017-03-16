@@ -9,7 +9,7 @@ using [Pillow](https://github.com/python-pillow/Pillow)
 <UL>
 <LI><strike>By R, G, B, or average</strike>  
 <LI>Directionality (sort vertically)  
-<LI>Thresholding (keep pixels above x brightness in place, sort partitions)
+<LI><strike>Thresholding</strike>
 <LI>Randomness/non-complete sorting
 </UL>
 <LI>RGB channel offset effect
