@@ -1,12 +1,16 @@
 import random
 
+import imgio
+
 
 def pixel_sort(array, flags):
     '''
     Pixelsorting effect taking an image array, and the mode. Uses variation on merge sort algorithm
     Inputs: array - a 3D image array
             flags - a dictionary of optional flag keys and values
-                    valid keys: 'mode': 'r', 'g', 'b', or 'c' | 'thr': int between 0<->255
+                    valid keys: 'mode': 'r', 'g', 'b', or 'c'
+                                'thr': int between 0<->255
+                                'dir': 'vertical' or 'horizontal'
     '''
     # todo direction (lowest-highest, up/down, etc)
 
@@ -19,6 +23,13 @@ def pixel_sort(array, flags):
 
     # Interpret threshold flag, default to 50% brightness
     threshold = int(flags['thr']) if 'thr' in flags else 255 // 2
+
+    # Interpret direction flag, default to right
+    rotated = False
+    if 'dir' in flags:
+        if flags['dir'] == 'vertical':
+            array = imgio.rotate_image(array, {'ang': '90'})
+            rotated = True
 
     # Function definitions for merge sort and getting sections
     def merge(left, right, index):
@@ -94,6 +105,11 @@ def pixel_sort(array, flags):
         for edge in zones:  # Run through each zone
             # Set that zone equal to the sorted version of that row
             array[row][sections[row][edge]:sections[row][edge + 1]] = merge_sort(array[row][sections[row][edge]:sections[row][edge + 1]], index)
+
+    # Rotate the image back if 'dir' flag was 'vertical'
+    if rotated is True:
+        array = imgio.rotate_image(array, {'ang': '270'})
+
     return array
 
 

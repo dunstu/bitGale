@@ -22,7 +22,7 @@ class bitGaleShell(cmd.Cmd):
         imgio.show_help(helpFile)
 
     def do_sort(self, rawInput):
-        validFlags = ['mode', 'thr']
+        validFlags = ['mode', 'thr', 'dir']
         flags = imgio.parse(rawInput, validFlags)
         if flags is not 'invalid':
             self.history.append(['sort', flags])

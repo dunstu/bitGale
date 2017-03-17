@@ -115,28 +115,30 @@ def rotate_image(array, flags):
 
     rotatedImage = []
     if angle == '90':
-        # Run through each column of the image
+        # Run through each column of the image, starting at the leftmost column
         for x in range(len(array[0])):
             # Create a new row in the rotated image
             rotatedImage.append([])
-            # Starting at the rightmost column, add every pixel in the columns to the row in the rotated image
+            # Starting at the bottommost row, add every pixel in the columns to the row in the rotated image
             for y in range(len(array) -1, 0, -1):
                 rotatedImage[x].append(array[y][x])
-        return rotatedImage
-    if angle == '180':
+    elif angle == '180':
         # Run through the rows of the image, starting from the bottom, and add them to the rotated image
-        for row in range(len(array)-1, -1, -1):
+        for row in range(len(array)-1, 0, -1):
             rotatedImage.append(array[row])
-        return rotatedImage
-    if angle == '270':
-        # Run through each column of the image
-        for x in range(len(array[0])):
+    elif angle == '270':
+        # Run through each column of the image, starting at the rightmost column
+        xRotatedImage = 0  # Counter that increments the row being adding to with every column being run through
+        for x in range(len(array[0]) - 1, 0, -1):
             # Create a new row in the rotated image
             rotatedImage.append([])
-            # Starting at the leftmost column, add every pixel in the columns to the row in the rotated image
+            # Starting at the topmost row, add every pixel in the columns to the row in the rotated image
             for y in range(len(array)):
-                rotatedImage[x].append(array[y][x])
-        return rotatedImage
+                rotatedImage[xRotatedImage].append(array[y][x])
+            xRotatedImage += 1
+    else:
+        print("*** Not a right angle, returning to shell.")
+    return rotatedImage
 
 
 def show_help(params):

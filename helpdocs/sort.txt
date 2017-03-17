@@ -4,3 +4,6 @@ Usage: bitGale~: sort -mode value
 -mode: mode flag - Specifies which RGB channel to use when getting pixel value
         > Either 'r', 'g', 'b' (red, green, or blue channel), or 'c' (for combined average)
         > Defaults to 'c'
+ -dir: direction flag - Specifies in which direction to sort pixels
+        > Either 'horizontal' or 'vertical'
+        > Defaults to horizontal
