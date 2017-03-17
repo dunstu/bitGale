@@ -8,7 +8,7 @@ using [Pillow](https://github.com/python-pillow/Pillow)
 <LI>Pixelsorting
 <UL>
 <LI><strike>By R, G, B, or average</strike>  
-<LI>Directionality (sort vertically)  
+<LI><strike>Directionality (sort vertically)</strike>
 <LI><strike>Thresholding</strike>
 <LI>Randomness/non-complete sorting
 </UL>
