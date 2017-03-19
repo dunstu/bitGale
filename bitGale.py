@@ -1,5 +1,7 @@
 import cmd
 
+from PIL import Image
+
 import effects
 import imgio
 
@@ -8,12 +10,14 @@ class bitGaleShell(cmd.Cmd):
     intro = "Welcome to bitGale. Type 'help' for general help, or 'quit' to exit the program.\n"
     prompt = 'bitGale~: '
     file = None
+    fullImage = Image.new('RGB', (0, 0))
     imageArray = []
     savedLastChange = False
     history = []
 
     def preloop(self):
-        self.imageArray = imgio.make_pixel_array(imgio.open_image())
+        self.fullImage = imgio.open_image()
+        self.imageArray = imgio.make_pixel_array(self.fullImage)
 
     def do_help(self, rawInput):
         validFlags = ['eff']

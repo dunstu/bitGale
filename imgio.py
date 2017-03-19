@@ -20,7 +20,9 @@ def open_image():
     return userImg
 
 
-def make_pixel_array(img):
+def make_pixel_array(PILimg):
+    img = make_thumb(PILimg)
+
     # Convert PIL image object to list of tuples in the form [(R, G, B)]
     rawPixels = list(img.getdata())
     width, height = img.size
@@ -34,6 +36,30 @@ def make_pixel_array(img):
             imgAsArray[y][x] = list(imgAsArray[y][x])
 
     return imgAsArray
+
+
+def make_thumb(img):
+    width, height = img.size
+
+    # If the image area exceeds 1920*1080
+    if width * height > 2073600:
+        print(" *** You have opened a larger than HD image. Operations will be preformed on a downsized copy to make\n"
+              "the program run faster in use, and then applied to the full-size image when saving. Saving will\n"
+              "therefore take a while!\n")
+
+        # Determine if the height and/or width is excessively large
+        heightTooBig = True if height > 1080 else False
+        widthTooBig = True if width > 1920 else False
+
+        # Get the percent by which to scale the thumbnail so that the thumb does not exceed 1920 by 1080
+        resizePercent = 1080 / height if heightTooBig else 1920 / width if widthTooBig else 1
+
+        # Get the new (width, height) as a tuple
+        newSize = (int(resizePercent * width), int(resizePercent * height))
+
+        # Resize the image
+        return img.resize(newSize)
+    return img
 
 
 def make_pil_image(array):
